@@ -17,14 +17,14 @@ func main() {
     // The template we are filling
     const myTemplate = "{{.Name}} has a power level of: {{.Power}}"
 
-    // Struct with object's fields, namely "Name" and "Power"
-    randy := &Warrior{Name: "Randolf the Elder", Power: 250}
+    // Creating the new templating
     tmpl, err := template.New("WarriorTemplate").Parse(myTemplate)
     if err != nil {
         log.Fatal(err)
     }
 
     // Execute the template and direct it to stdout
+    randy := &Warrior{Name: "Randolf the Elder", Power: 250}
     err = tmpl.Execute(os.Stdout, randy)
     if err != nil {
         log.Fatal(err) 
