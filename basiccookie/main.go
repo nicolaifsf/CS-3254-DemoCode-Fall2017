@@ -14,7 +14,7 @@ func favoriteCookie(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	// If it is a GET request, we check if the cookie already has been set. If not, we provide a form for them to
 	// tell us their favorite cookie
-	case "GET":
+	case http.MethodGet:
 		// Try to retrieve the cookie
 		favoriteCookie, err := r.Cookie(COOKIE_NAME)
 		if err != nil {
@@ -31,7 +31,7 @@ func favoriteCookie(w http.ResponseWriter, r *http.Request) {
 			// If the cookie does exist, we simply reply, letting them know what they told us was their favorite cookie
 			fmt.Fprintf(w, "You have already told us your favorite cookie is: %s", favoriteCookie.Value)
 		}
-	case "POST":
+	case http.MethodPost:
 		// First we have to parse the form
 		r.ParseForm()
 		cookie := http.Cookie {
@@ -49,4 +49,5 @@ func main() {
 	http.HandleFunc("/cookie", favoriteCookie)
 	http.ListenAndServe(":8080", nil)
 }
+
 
