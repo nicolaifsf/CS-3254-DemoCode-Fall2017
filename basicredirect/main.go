@@ -1,8 +1,8 @@
 package main
 
 import (
-    "fmt"
-    "net/http"
+	"fmt"
+	"net/http"
 	"io/ioutil"
 	"log"
 )
@@ -16,16 +16,18 @@ func form(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprintf(w, string(form))
 	case http.MethodPost:
-		// Parse the form
-		r.ParseForm()
-		// Print the values of the form
-		fmt.Fprintf(w, "You said you like: %s and you picked #%s\n", r.PostFormValue("fruit"),
-																			r.PostFormValue("number"))
+		// Example of redirecting after the form has been filled out
+		http.Redirect(w, r, "/thanks", http.StatusTemporaryRedirect)
 	}
+}
+
+func thanks(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Thanks for all the fish!")
 }
 
 func main() {
 	http.HandleFunc("/form", form)
+	http.HandleFunc("/thanks", thanks)
 	http.ListenAndServe(":8080", nil)
 }
 
