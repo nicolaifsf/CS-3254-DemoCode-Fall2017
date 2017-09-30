@@ -24,8 +24,13 @@ func form(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func swag(w http.ResponseWriter, r *http.Request) {
+  fmt.Fprintf(w,"swag")
+}
+
 func main() {
 	http.HandleFunc("/form", form)
+    http.HandleFunc("/swag", swag)
 	http.ListenAndServe(":8080", nil)
 }
 
